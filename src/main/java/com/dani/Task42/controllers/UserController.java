@@ -1,5 +1,6 @@
 package com.dani.Task42.controllers;
 
+import com.dani.Task42.exceptions.UserNotFoundException;
 import com.dani.Task42.models.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,14 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public void getEspecificUser(@PathVariable UUID id){
-
+    public User getEspecificUser(@PathVariable UUID id) {
+        User user1;
+        for (User user : usersList) {
+            if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        throw new UserNotFoundException();
     }
 
     @PostMapping("/users")
